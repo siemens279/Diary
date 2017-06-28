@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,7 @@ public class f_registration extends Fragment {
 
     private FirebaseAuth mAuth;
     EditText etEmail, etPassword, etNane, etAge;
-    Button bRegistration;
+    Button bRegistration, bBack;
 
     @Nullable
     @Override
@@ -38,6 +39,21 @@ public class f_registration extends Fragment {
             @Override
             public void onClick(View view) {
                 registration(etEmail.getText().toString(), etPassword.getText().toString());
+            }
+        });
+        bBack = (Button) view.findViewById(R.id.buttonBack);
+        bBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment fragment = null;
+                Class fragmentClass = f_sing_in.class;
+                FragmentManager fragmentManager = getFragmentManager();
+                try {
+                    fragment = (Fragment) fragmentClass.newInstance();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
             }
         });
         return view;
