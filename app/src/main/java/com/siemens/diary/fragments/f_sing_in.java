@@ -73,7 +73,7 @@ public class f_sing_in extends Fragment {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    //Toast.makeText(getContext(), "Goog avtorization", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Goog avtorization", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getContext(), "Неверный логин или пароль", Toast.LENGTH_SHORT).show();
                     //Log.d(TAG, task.toString());
