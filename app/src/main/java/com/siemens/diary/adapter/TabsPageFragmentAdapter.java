@@ -15,7 +15,10 @@ public class TabsPageFragmentAdapter extends FragmentPagerAdapter {
         tabs = new String[] {
                 "Tab 1",
                 "Tab 2",
-                "Tab 2" };
+                "Tab 3",
+                "Tab 4",
+                "Tab 5",
+                "Tab 6" };
     }
 
     @Override
@@ -26,6 +29,8 @@ public class TabsPageFragmentAdapter extends FragmentPagerAdapter {
             case 1:
                 return f_tab1.getInstance();
             case 2:
+                return f_tab1.getInstance();
+            case 3:
                 return f_tab1.getInstance();
         }
         return null;

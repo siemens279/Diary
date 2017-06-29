@@ -3,6 +3,9 @@ package com.siemens.diary;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,6 +18,8 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.siemens.diary.adapter.TabsPageFragmentAdapter;
+import com.siemens.diary.fragments.f_add_diary;
+import com.siemens.diary.fragments.f_sing_in;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,12 +38,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void intTabs() {
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-        TabsPageFragmentAdapter adapter = new TabsPageFragmentAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(adapter);
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
-        tabLayout.setupWithViewPager(viewPager);
+//        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+//        TabsPageFragmentAdapter adapter = new TabsPageFragmentAdapter(getSupportFragmentManager());
+//        viewPager.setAdapter(adapter);
+//
+//        TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
+//        tabLayout.setupWithViewPager(viewPager);
     }
 
     private void initToolbar() {
@@ -47,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
+                    case R.id.mAdd:
+                        setFragment(f_add_diary.class, null);
+                        break;
                     case R.id.mExit:
                         mAuth.signOut();
                         startActivity(new Intent(MainActivity.this, SingInActivity.class));
@@ -56,6 +64,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         toolbar.inflateMenu(R.menu.menu);
+    }
+
+    public void setFragment(Class clas, Bundle bundle) {
+        //Class fragmentClass = clas;
+        Fragment fragment = null;
+        try {
+            fragment = (Fragment) clas.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (bundle!=null) {
+            fragment.setArguments(bundle);
+        }
+        if (fragment!=null) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.container, fragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
     }
 
     private void initNavigationView() {
@@ -77,5 +104,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
 }
